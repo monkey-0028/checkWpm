@@ -1,0 +1,30 @@
+#!/bin/bash
+
+if [ -d ~/.checkWps ]
+then
+	:
+else
+	mkdir ~/.checkWps ~/.checkWps/INCL ~/.checkWps/BASH_FILES 
+	mkdir ~/.checkWps/USERS ~/.checkWps/TEXT_FILES
+
+fi
+
+if [ ! -d ~/.checkWps/USERS ]
+then
+	mkdir ~/.checkWps/USERS
+fi
+
+if [ ! -d ~/.checkWps/INCL ]
+then
+	mkdir ~/.checkWps/INCL
+fi
+
+if [ ! -d ~/.checkWps/BASH_FILES ]
+then
+	mkdir ~/.checkWps/BASH_FILES
+fi
+
+if [ ! -d ~/.checkWps/TEXT_FILES ]
+then
+	mkdir ~/.checkWps/TEXT_FILES
+fi
