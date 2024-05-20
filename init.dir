@@ -1,30 +1,39 @@
 #!/bin/bash
 
-if [ -d ~/.checkWps ]
+if [ -d ~/.checkWpm ]
 then
 	:
 else
-	mkdir ~/.checkWps ~/.checkWps/INCL ~/.checkWps/BASH_FILES 
-	mkdir ~/.checkWps/USERS ~/.checkWps/TEXT_FILES
+	mkdir ~/.checkWpm ~/.checkWpm/INCL ~/.checkWpm/BASH_FILES 
+	mkdir ~/.checkWpm/USERS ~/.checkWpm/TEXT_FILES
 
 fi
 
-if [ ! -d ~/.checkWps/USERS ]
+if [ ! -d ~/.checkWpm/USERS ]
 then
-	mkdir ~/.checkWps/USERS
+	mkdir ~/.checkWpm/USERS
 fi
 
-if [ ! -d ~/.checkWps/INCL ]
+if [ ! -d ~/.checkWpm/INCL ]
 then
-	mkdir ~/.checkWps/INCL
+	mkdir ~/.checkWpm/INCL
 fi
 
-if [ ! -d ~/.checkWps/BASH_FILES ]
+if [ ! -d ~/.checkWpm/BASH_FILES ]
 then
-	mkdir ~/.checkWps/BASH_FILES
+	mkdir ~/.checkWpm/BASH_FILES
 fi
 
-if [ ! -d ~/.checkWps/TEXT_FILES ]
+if [ ! -d ~/.checkWpm/TEXT_FILES ]
 then
-	mkdir ~/.checkWps/TEXT_FILES
+	mkdir ~/.checkWpm/TEXT_FILES
 fi
+
+rm def.h &> /dev/null
+
+touch def.h
+
+echo "char  *HOME = \"$HOME\"; " >> def.h
+
+
+

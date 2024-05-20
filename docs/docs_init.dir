@@ -1,0 +1,11 @@
+This file Creates the required directory in the $HOME
+
+if any directory is deleted, it will just create that deleted
+directory without touching other directories.
+
+it also generated a char * HOME and created a file named 
+"def.h" where ./init.dir is executed.
+Make sure to execute init.dir in the same dir as the main.c
+because generated file "def.h"	will get included in the main.c
+
+
