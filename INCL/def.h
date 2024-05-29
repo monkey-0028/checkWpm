@@ -10,8 +10,15 @@
 		init_pair(2, COLOR_RED, COLOR_BLACK);\
 		bkgd(COLOR_PAIR(1));\
 	}\
-	refresh();
+	attron(A_BOLD);
+	
 
 #define END \
 	curs_set(1);\
 	endwin();
+
+
+#define space(n)\
+	for(int i=0;i<n;i++){\
+		printw(" ");\
+	}
