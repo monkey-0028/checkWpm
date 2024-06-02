@@ -1,1 +1,0 @@
-char  *HOME = "/home/monkey"; 

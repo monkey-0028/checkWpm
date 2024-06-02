@@ -1,57 +1,83 @@
 #include <ncurses.h>
-#include <string.h>
-#include "./INCL/def.h"
 
+#define const_y 5
+
+enum permission{
+    enable,disable
+};
 
 int x=0;
-short int option(char *non_select[],char *select[],int len, int max_char);
+int y=0;
 
+//functions
+enum permission check_window_size();
+void set_layout(WINDOW *con, WINDOW *timer, WINDOW *use, WINDOW *message, WINDOW *work);
+//
 
 int main(){
-	INIT
-	x = getmaxx(stdscr);
+    WINDOW *control,*timer,*user_info,*message,*work_space;
+    
+    initscr();
+    noecho();
+    raw();
+    curs_set(0);
+    keypad(stdscr,TRUE);
+    
+    //color
+    if(has_colors()){
+        start_color();
+        init_pair(1,COLOR_RED,COLOR_BLACK);
+        init_pair(2,COLOR_WHITE,COLOR_BLACK);
+        init_pair(3,COLOR_YELLOW,COLOR_BLACK);
+        init_pair(4,COLOR_GREEN,COLOR_BLACK);
+        bkgd(COLOR_PAIR(2));
+    }
+    else{
+        printw("This terminal doesn't support color : ");
+        getchar();
+        return 0;
+    }
+    refresh();
 
-	char *strings[] = {"hi","this"};
-	char *s_strings[]={"h i","t h i s"};
-	option(strings,s_strings,2,strlen("t h i s"));
-	
-	
+    getmaxyx(stdscr,y,x);
 
-	END
-	return 0;
+    //initial layout
+    if(check_window_size() == enable){
+        set_layout(control,timer,user_info,message,work_space);
+    }
+    
+    int main_input=0;
+    while(1){
+        if(check_window_size() == disable){
+            attron(COLOR_PAIR(1));
+            printw("Current window size is not supported..");
+            attroff(COLOR_PAIR(1));
+            printw("\nPlease resize your window then press \"F2\"");
+            refresh();
+        }
+
+        main_input = getch();
+
+        //handling key inputs
+        if(main_input == KEY_RESIZE){
+            clear();
+            getmaxyx(stdscr,y,x);
+            if(check_window_size() == enable){
+                set_layout(control,timer,user_info,message,work_space);
+            }
+        }
+        
+        refresh();
+
+    }
+
+
+    getch();
+
+    curs_set(1);
+    endwin();
+    return 0;
 }
-short int option(char *non_select[],char *select[],int len,int max_char){
-	short int pointer=0;
-	short int input_value=0;
-	while(input_value != 10){
-		printw("\n\n");
-		for(int i=0;i<len;i++){
-			//align in the center
-			space((x-max_char)/2)
-		
-			if(pointer==i){
-				attron(COLOR_PAIR(2));
-				printw("%s\n",select[i]);
-				attroff(COLOR_PAIR(2));
-			}
-			else{
-				printw("%s\n",non_select[i]);
-			}
 
-		}
-		refresh();
-		input_value  = getch();
-		if(input_value == KEY_UP){
-			pointer-=1;
-			if(pointer == -1){pointer = len-1;}
-		}
-		if(input_value == KEY_DOWN){
-			pointer+=1;
-			if(pointer == len){pointer=0;}
-		}
-		printw("%d",pointer);
-		clear();
-	}
-	return pointer;
-}
-
+#include "./INCL/check_window_size.h"
+#include "./INCL/set_layout.h"
